@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private PieceView pieceView;
 
     private BoardController boardController;
-
+    private EventService eventService;
     private void Start()
     {
         Initialize();
@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour
 
     private void Initialize()
     {
+        eventService = new EventService();
         boardController = new BoardController(boardScriptableObject, boardView, pieceView);
     }
 }

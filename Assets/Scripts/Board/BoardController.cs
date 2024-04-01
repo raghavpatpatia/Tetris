@@ -28,4 +28,31 @@ public class BoardController
             boardView.TileMap.SetTile(tilePosition, piece.data.tile);
         }
     }
+
+    public void Clear(PieceController piece)
+    {
+        for (int i = 0; i < piece.cells.Length; i++)
+        {
+            Vector3Int tilePosition = piece.cells[i] + piece.position;
+            boardView.TileMap.SetTile(tilePosition, null);
+        }
+    }
+
+    public bool IsValidPosition(PieceController piece, Vector3Int position)
+    {
+        RectInt bounds = boardModel.bounds;
+        for (int i = 0; i < piece.cells.Length; i++)
+        {
+            Vector3Int tilePosition = piece.cells[i] + position;
+            if (boardView.TileMap.HasTile(tilePosition))
+            {
+                return false;
+            }
+            if (!bounds.Contains((Vector2Int)tilePosition))
+            {
+                return false;
+            }
+        }
+        return true;
+    }
 }
