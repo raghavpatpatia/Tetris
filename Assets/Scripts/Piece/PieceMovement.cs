@@ -21,6 +21,7 @@ public class PieceMovement
         if (valid)
         {
             pieceController.position = newPosition;
+            pieceController.SetLockTime(0);
         }
         return valid;
     }

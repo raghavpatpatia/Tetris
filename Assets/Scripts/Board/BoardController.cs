@@ -1,23 +1,31 @@
 ﻿using UnityEngine;
+using UnityEngine.Tilemaps;
+
 public class BoardController
 {
     private BoardView boardView;
     private BoardModel boardModel;
-    private PieceView pieceView;
-    private PieceController activePiece;
-    public BoardController(BoardScriptableObject boardSO, BoardView boardView, PieceView pieceView)
+    private EventService eventService;
+
+    public BoardController(BoardScriptableObject boardSO, BoardView boardView, EventService eventService)
     {
         boardModel = new BoardModel(boardSO);
         this.boardView = boardView;
         boardView.Initialize(this);
-        this.pieceView = pieceView;
+        this.eventService = eventService;
     }
 
-    public void SpawnPiece()
+    public void SpawnPiece(PieceController activePiece)
     {
-        TetrominoData data = boardView.tetrominoData[Random.Range(0, boardView.tetrominoData.Length)];
-        activePiece = new PieceController(pieceView, this, boardModel.spawnPosition, data);
-        Set(activePiece);
+        if (IsValidPosition(activePiece, boardModel.spawnPosition))
+            Set(activePiece);
+        else
+            GameOver();
+    }
+
+    private void GameOver()
+    {
+        boardView.TileMap.ClearAllTiles();
     }
 
     public void Set(PieceController piece)
@@ -54,5 +62,50 @@ public class BoardController
             }
         }
         return true;
+    }
+
+    public void ClearTiles()
+    {
+        for (int row = boardModel.bounds.yMin; row < boardModel.bounds.yMax; row++)
+        {
+            if (IsRowFull(row))
+            {
+                ClearRow(row);
+            }
+        }
+    }
+
+    private bool IsRowFull(int row)
+    {
+        for (int column = boardModel.bounds.xMin; column < boardModel.bounds.xMax; column++)
+        {
+            Vector3Int position = new Vector3Int(column, row, 0);
+            if (!boardView.TileMap.HasTile(position))
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private void ClearRow(int row)
+    {
+        for (int column = boardModel.bounds.xMin; column < boardModel.bounds.xMax; column++)
+        {
+            Vector3Int position = new Vector3Int(column, row, 0);
+            boardView.TileMap.SetTile(position, null);
+        }
+
+        while (row < boardModel.bounds.yMax)
+        {
+            for (int column = boardModel.bounds.xMin; column < boardModel.bounds.xMax; column++)
+            {
+                Vector3Int position = new Vector3Int(column, row + 1, 0);
+                TileBase above = boardView.TileMap.GetTile(position);
+                position = new Vector3Int(column, row, 0);
+                boardView.TileMap.SetTile(position, above);
+            }
+            row++;
+        }
     }
 }

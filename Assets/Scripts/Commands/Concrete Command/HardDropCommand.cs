@@ -14,5 +14,6 @@ public class HardDropCommand : PieceUnitCommand
         {
             continue;
         }
+        pieceController.Lock();
     }
 }

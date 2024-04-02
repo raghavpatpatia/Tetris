@@ -4,18 +4,26 @@ public class PieceController
 {
     private PieceView pieceView;
     public Vector3Int position;
+    public PieceModel pieceModel { get; private set; }
     public BoardController board { get; private set; }
     public TetrominoData data { get; private set; }
     public Vector3Int[] cells { get; private set; }
     public CommandInvoker commandInvoker { get; private set; }
+    private EventService eventService;
+    public float stepTime { get; private set; }
+    public float lockTime { get; private set; }
 
-    public PieceController(PieceView pieceView, BoardController board, Vector3Int position, TetrominoData data)
+    public PieceController(BoardController board, Vector3Int position, TetrominoData data, PieceScriptableObject pieceSO, PieceView pieceView, EventService eventService)
     {
+        this.eventService = eventService;
+        this.pieceModel = new PieceModel(pieceSO);
         this.pieceView = pieceView;
         pieceView.SetPieceController(this);
         this.board = board;
         this.position = position;
         this.data = data;
+        this.stepTime = Time.time + pieceModel.stepDelay;
+        this.lockTime = 0f;
         InitializeCells(data);
         commandInvoker = new CommandInvoker();
     }
@@ -27,6 +35,28 @@ public class PieceController
 
         for (int i = 0; i < data.cells.Length; i++)
             this.cells[i] = (Vector3Int)data.cells[i];
+    }
+
+    public void SetLockTime(float time) => lockTime = time;
+
+    public void Step()
+    {
+        stepTime = Time.time + pieceModel.stepDelay;
+
+        MoveDown();
+        board.ClearTiles();
+
+        if (lockTime >= pieceModel.lockDelay)
+        {
+            Lock();
+        }
+    }
+
+    public void Lock()
+    {
+        board.Set(this);
+        board.ClearTiles();
+        eventService.SpawnRandomPiece.Invoke(board);
     }
 
     public void MoveLeft()
@@ -41,7 +71,7 @@ public class PieceController
         commandInvoker.ProcessCommand(moveRight as ICommand);
     }
 
-    public void MoveDown()
+    private void MoveDown()
     {
         PieceUnitCommand moveDown = new MoveCommand(this, board, Vector2Int.down);
         commandInvoker.ProcessCommand(moveDown as ICommand);

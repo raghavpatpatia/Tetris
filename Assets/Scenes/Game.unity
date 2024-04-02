@@ -134,7 +134,7 @@ GameObject:
   - component: {fileID: 131626413}
   - component: {fileID: 131626412}
   - component: {fileID: 131626415}
-  - component: {fileID: 131626414}
+  - component: {fileID: 131626416}
   m_Layer: 0
   m_Name: GameBoard
   m_TagString: Untagged
@@ -170,18 +170,6 @@ Transform:
   - {fileID: 448107652}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &131626414
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 131626411}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 18b488b95174b074482b5d65d783481f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &131626415
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -195,7 +183,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tilemap: {fileID: 448107654}
-  tetrominoes: {fileID: 11400000, guid: 961e797d3fd632042bfc91442dcb1abf, type: 2}
+--- !u!114 &131626416
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 131626411}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18b488b95174b074482b5d65d783481f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &224745943
 GameObject:
   m_ObjectHideFlags: 0
@@ -736,7 +735,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   boardView: {fileID: 131626415}
   boardScriptableObject: {fileID: 11400000, guid: 95417e3a965b1a74eaa8d4df81336bd3, type: 2}
-  pieceView: {fileID: 131626414}
+  tetrominoDataScriptableObject: {fileID: 11400000, guid: 961e797d3fd632042bfc91442dcb1abf, type: 2}
+  pieceView: {fileID: 131626416}
+  pieceScriptableObject: {fileID: 11400000, guid: c83656cc619241d419ba6d45b7f88cd9, type: 2}
 --- !u!4 &1756824365
 Transform:
   m_ObjectHideFlags: 0
@@ -878,8 +879,8 @@ SceneRoots:
   m_Roots:
   - {fileID: 519420032}
   - {fileID: 1170524396}
+  - {fileID: 1756824365}
   - {fileID: 1454002241}
   - {fileID: 958064423}
   - {fileID: 131626413}
   - {fileID: 224745945}
-  - {fileID: 1756824365}
