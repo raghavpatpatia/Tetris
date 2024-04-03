@@ -16,14 +16,6 @@ public class BoardController
         eventService.RestartGame.AddListener(GameOver);
     }
 
-    //public void SpawnPiece(PieceController activePiece)
-    //{
-    //    if (IsValidPosition(activePiece, boardModel.spawnPosition))
-    //        Set(activePiece);
-    //    else
-    //        eventService.RestartGame.Invoke();
-    //}
-
     private void GameOver()
     {
         boardView.TileMap.ClearAllTiles();
@@ -109,6 +101,8 @@ public class BoardController
             }
             row++;
         }
+        eventService.AddScore.Invoke();
+        eventService.PlaySoundEffect.Invoke(Sounds.LineClear);
     }
     ~BoardController()
     {
