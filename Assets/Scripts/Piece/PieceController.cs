@@ -43,7 +43,7 @@ public class PieceController
     {
         stepTime = Time.time + pieceModel.stepDelay;
 
-        MoveDown();
+        DropDown();
         board.ClearTiles();
 
         if (lockTime >= pieceModel.lockDelay)
@@ -71,7 +71,7 @@ public class PieceController
         commandInvoker.ProcessCommand(moveRight as ICommand);
     }
 
-    private void MoveDown()
+    private void DropDown()
     {
         PieceUnitCommand moveDown = new MoveCommand(this, board, Vector2Int.down);
         commandInvoker.ProcessCommand(moveDown as ICommand);

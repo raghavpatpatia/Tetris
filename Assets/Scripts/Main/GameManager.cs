@@ -7,9 +7,12 @@ public class GameManager : MonoBehaviour
     [SerializeField] private BoardScriptableObject boardScriptableObject;
     [Header("TetrominoDataScriptableObjectList")]
     [SerializeField] private TetrominoDataScriptableObjectList tetrominoDataScriptableObject;
-    [Header("Piece View")]
+    [Header("Piece")]
     [SerializeField] private PieceView pieceView;
     [SerializeField] private PieceScriptableObject pieceScriptableObject;
+    [Header("Ghost Piece")]
+    [SerializeField] private GhostPieceScriptableObject ghostPieceScriptableObject;
+    [SerializeField] private GhostPieceView ghostPieceView;
 
     private BoardController boardController;
     private EventService eventService;
@@ -42,8 +45,15 @@ public class GameManager : MonoBehaviour
     {
         TetrominoData data = tetrominoDataScriptableObject.tetrominoData[Random.Range(0, tetrominoDataScriptableObject.tetrominoData.Length)];
         PieceController activePiece = new PieceController(board, boardScriptableObject.spawnPosition, data, pieceScriptableObject, pieceView, eventService);
-        boardController.SpawnPiece(activePiece);
+
+        GhostPieceController ghostPieceController = new GhostPieceController(ghostPieceScriptableObject, ghostPieceView, boardController, activePiece, eventService);
+
+        if (boardController.IsValidPosition(activePiece, boardController.boardModel.spawnPosition))
+            boardController.Set(activePiece);
+        else
+            eventService.RestartGame.Invoke();
     }
+
     private void OnDisable()
     {
         eventService.SpawnRandomPiece.RemoveListener(SpawnRandomPiece);

@@ -501,6 +501,7 @@ GameObject:
   m_Component:
   - component: {fileID: 958064423}
   - component: {fileID: 958064422}
+  - component: {fileID: 958064424}
   m_Layer: 0
   m_Name: GhostTilemap
   m_TagString: Untagged
@@ -536,6 +537,19 @@ Transform:
   - {fileID: 1974731884}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &958064424
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 958064421}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a425822761fc33142b61f9ac5746ed96, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tileMap: {fileID: 1974731886}
 --- !u!1 &1170524394
 GameObject:
   m_ObjectHideFlags: 0
@@ -738,6 +752,8 @@ MonoBehaviour:
   tetrominoDataScriptableObject: {fileID: 11400000, guid: 961e797d3fd632042bfc91442dcb1abf, type: 2}
   pieceView: {fileID: 131626416}
   pieceScriptableObject: {fileID: 11400000, guid: c83656cc619241d419ba6d45b7f88cd9, type: 2}
+  ghostPieceScriptableObject: {fileID: 11400000, guid: b48a56b7032ff034891cbda41e7a49dc, type: 2}
+  ghostPieceView: {fileID: 958064424}
 --- !u!4 &1756824365
 Transform:
   m_ObjectHideFlags: 0

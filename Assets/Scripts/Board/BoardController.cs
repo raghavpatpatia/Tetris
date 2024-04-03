@@ -4,7 +4,7 @@ using UnityEngine.Tilemaps;
 public class BoardController
 {
     private BoardView boardView;
-    private BoardModel boardModel;
+    public BoardModel boardModel { get; private set; }
     private EventService eventService;
 
     public BoardController(BoardScriptableObject boardSO, BoardView boardView, EventService eventService)
@@ -13,15 +13,16 @@ public class BoardController
         this.boardView = boardView;
         boardView.Initialize(this);
         this.eventService = eventService;
+        eventService.RestartGame.AddListener(GameOver);
     }
 
-    public void SpawnPiece(PieceController activePiece)
-    {
-        if (IsValidPosition(activePiece, boardModel.spawnPosition))
-            Set(activePiece);
-        else
-            GameOver();
-    }
+    //public void SpawnPiece(PieceController activePiece)
+    //{
+    //    if (IsValidPosition(activePiece, boardModel.spawnPosition))
+    //        Set(activePiece);
+    //    else
+    //        eventService.RestartGame.Invoke();
+    //}
 
     private void GameOver()
     {
@@ -71,6 +72,7 @@ public class BoardController
             if (IsRowFull(row))
             {
                 ClearRow(row);
+                eventService.ClearGhostPieceRow.Invoke(row);
             }
         }
     }
@@ -107,5 +109,9 @@ public class BoardController
             }
             row++;
         }
+    }
+    ~BoardController()
+    {
+        eventService.RestartGame.RemoveListener(GameOver);
     }
 }
