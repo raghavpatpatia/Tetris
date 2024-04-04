@@ -29,11 +29,18 @@ public class GameManager : MonoBehaviour
     [SerializeField] private AudioSource backgroundMusic;
     [SerializeField] private AudioSource soundEffect;
     [SerializeField] private Slider bgMusicSlider;
+    [Header("GameOver")]
+    [SerializeField] private GameObject gameOverPanel;
+    [SerializeField] private Button restartButton;
+    [SerializeField] private Button gameOverQuitButton;
+    [Header("LeaderBoardManager")]
+    [SerializeField] private LeaderboardManager leaderboardManager;
 
     private BoardController boardController;
     private EventService eventService;
     private SoundController soundController;
     private ScoreController scoreController;
+    private GameOverController gameOverController;
 
     private void Awake()
     {
@@ -49,10 +56,17 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         Initialize();
-        eventService.SpawnRandomPiece.AddListener(SpawnRandomPiece);
+        SubscribeEvents();
         SpawnRandomPiece(boardController);
         soundController.PlayBGMusic(Sounds.BGMusic);
         OnButtonClick();
+        
+    }
+
+    private void SubscribeEvents()
+    {
+        eventService.QuitGame.AddListener(OnQuitButtonClick);
+        eventService.SpawnRandomPiece.AddListener(SpawnRandomPiece);
         bgMusicSlider.onValueChanged.AddListener(ChangeBackgroundVolume);
     }
 
@@ -71,6 +85,8 @@ public class GameManager : MonoBehaviour
         boardController = new BoardController(boardScriptableObject, boardView, eventService);
         scoreController = new ScoreController(scoreText, ScorePerRow, eventService);
         soundController = new SoundController(soundEffect, backgroundMusic, sounds, eventService);
+        gameOverController = new GameOverController(gameOverPanel, restartButton, gameOverQuitButton, eventService);
+        leaderboardManager.Init(eventService, scoreController);
     }
 
     private void SpawnRandomPiece(BoardController board)
@@ -83,7 +99,10 @@ public class GameManager : MonoBehaviour
         if (boardController.IsValidPosition(activePiece, boardController.boardModel.spawnPosition))
             boardController.Set(activePiece);
         else
-            eventService.RestartGame.Invoke();
+        {
+            pauseButton.gameObject.SetActive(false);
+            eventService.GameOver.Invoke();
+        }
     }
 
     private void OnPauseButtonClick()
@@ -117,6 +136,7 @@ public class GameManager : MonoBehaviour
 
     private void OnDisable()
     {
+        eventService.QuitGame.RemoveListener(OnQuitButtonClick);
         eventService.SpawnRandomPiece.RemoveListener(SpawnRandomPiece);
     }
 }

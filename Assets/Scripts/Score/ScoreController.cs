@@ -1,5 +1,4 @@
 ﻿using TMPro;
-
 public class ScoreController
 {
     private TextMeshProUGUI scoreText;
@@ -33,6 +32,8 @@ public class ScoreController
         Score = 0;
         scoreText.text = Score.ToString();
     }
+
+    public int GetCurrentScore() => Score;
 
     ~ScoreController()
     {

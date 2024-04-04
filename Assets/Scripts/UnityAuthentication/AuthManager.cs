@@ -14,7 +14,10 @@ public class AuthManager : MonoBehaviour
     [SerializeField] private Button loginButton;
     [SerializeField] private Button signupButton;
     [SerializeField] private int sceneIndex;
-
+    [SerializeField] private GameObject hoverObject;
+    [SerializeField] private TextMeshProUGUI hoverText;
+    
+    private HoverObjectController hoverObjectController;
     private async void Awake()
     {
         try
@@ -29,6 +32,7 @@ public class AuthManager : MonoBehaviour
 
     private void Start()
     {
+        hoverObjectController = new HoverObjectController(hoverObject, hoverText);
         loginButton.onClick.AddListener(SignIn);
         signupButton.onClick.AddListener(SignUp);
     }
@@ -41,6 +45,7 @@ public class AuthManager : MonoBehaviour
         try
         {
             await AuthenticationService.Instance.SignUpWithUsernamePasswordAsync(userName, password);
+            await AuthenticationService.Instance.UpdatePlayerNameAsync(userName);
             LoadScene();
         }
         catch (AuthenticationException ex)
@@ -50,6 +55,7 @@ public class AuthManager : MonoBehaviour
         }
         catch (RequestFailedException ex)
         {
+            await hoverObjectController.LoginFailed(2f, "Sign Up failed...");
             ClearInputFields();
             Debug.LogException(ex);
         }
@@ -72,6 +78,7 @@ public class AuthManager : MonoBehaviour
         }
         catch (RequestFailedException ex)
         {
+            await hoverObjectController.LoginFailed(2f, "Log In failed...");
             ClearInputFields();
             Debug.LogException(ex);
         }

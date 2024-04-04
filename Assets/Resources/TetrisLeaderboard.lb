@@ -1,0 +1,38 @@
+{
+  "$schema": "https://ugs-config-schemas.unity3d.com/v1/leaderboards.schema.json",
+  "SortOrder": "desc",
+  "UpdateType": "keepBest",
+  "ResetConfig": {
+    "Start": "2024-04-15T00:00:00+05:30",
+    "Schedule": "@every 1h"
+  },
+  "TieringConfig": {
+    "Strategy": "score",
+    "Tiers": [
+      {
+        "Id": "Grand-Master",
+        "Cutoff": 500.0
+      },
+      {
+        "Id": "Master",
+        "Cutoff": 400.0
+      },
+      {
+        "Id": "Expert",
+        "Cutoff": 300.0
+      },
+      {
+        "Id": "Journeyman",
+        "Cutoff": 200.0
+      },
+      {
+        "Id": "Apprentice",
+        "Cutoff": 100.0
+      },
+      {
+        "Id": "Novice"
+      }
+    ]
+  },
+  "Name": "Tetris Leaderboard"
+}
