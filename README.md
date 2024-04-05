@@ -38,6 +38,10 @@ Welcome to the Tetris Unity Project! This project showcases the classic Tetris g
 ## Gameplay
 You can play the game online [here](https://raghavpatpatia.itch.io/tetris).
 
+## YouTube Gameplay
+- [Watch the gameplay video on YouTube](https://www.youtube.com/watch?v=7wO5HsmbMDE)
+- [![YouTube Gameplay](https://img.youtube.com/vi/7wO5HsmbMDE/maxresdefault.jpg)](https://www.youtube.com/watch?v=7wO5HsmbMDE)
+
 ## Credits:
 - Created by [Raghav Patpatia]
 - Inspired by the classic Tetris game
