@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System;
 using Unity.Services.Core;
 using Unity.Services.Leaderboards;
 using UnityEngine;
@@ -9,13 +10,28 @@ public class LeaderboardController
     private EventService eventService;
     private ScoreController scoreController;
     private LeaderboardPool leaderboardPool;
+    private const string LeaderboardId = "TetrisLeaderboard";
     public LeaderboardController(LeaderboardView view, EventService eventService, ScoreController scoreController) 
     {
+        Initialize();
         this.view = view;
         view.Init(this);
         this.eventService = eventService;
         this.scoreController = scoreController;
         leaderboardPool = new LeaderboardPool(view.EntityView, view.SpawnPosition);
+        SubscribeEvents();
+    }
+
+    private async void Initialize()
+    {
+        try
+        {
+            await UnityServices.InitializeAsync();
+        }
+        catch (Exception e)
+        {
+            Debug.LogException(e);
+        }
     }
 
     private void SubscribeEvents()
@@ -33,7 +49,7 @@ public class LeaderboardController
 
         try
         {
-            var page = await LeaderboardsService.Instance.GetScoresAsync(view.LeaderboardId, options);
+            var page = await LeaderboardsService.Instance.GetScoresAsync(LeaderboardId, options);
             foreach (var entry in page.Results)
             {
                 leaderboardPool.GetLeaderboardEntityController().SetData((int)entry.Score, entry.Tier, entry.PlayerName);
@@ -53,7 +69,7 @@ public class LeaderboardController
 
     private async void AddScore()
     {
-        var playerEntry = await LeaderboardsService.Instance.AddPlayerScoreAsync(view.LeaderboardId, scoreController.GetCurrentScore());
+        var playerEntry = await LeaderboardsService.Instance.AddPlayerScoreAsync(LeaderboardId, scoreController.GetCurrentScore());
         Debug.Log(JsonConvert.SerializeObject(playerEntry));
     }
     ~LeaderboardController()

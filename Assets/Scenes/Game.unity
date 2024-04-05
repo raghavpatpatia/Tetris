@@ -6096,7 +6096,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   positionToSpawn: {fileID: 1317684172}
   entityView: {fileID: -8014831580438966234, guid: 833fa112b8223374081c8c109caf1cda, type: 3}
-  leaderboardId: TetrisLeaderboard
+  leaderboardId: 'TetrisLeaderboard  '
   backButton: {fileID: 660340284}
 --- !u!1 &2122200995
 GameObject:
