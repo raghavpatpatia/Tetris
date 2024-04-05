@@ -1778,6 +1778,7 @@ GameObject:
   - component: {fileID: 660340286}
   - component: {fileID: 660340285}
   - component: {fileID: 660340284}
+  - component: {fileID: 660340287}
   m_Layer: 5
   m_Name: Go Back Button
   m_TagString: Untagged
@@ -1887,6 +1888,23 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 660340282}
   m_CullTransparentMesh: 1
+--- !u!114 &660340287
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 660340282}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8fb11c9412595d40951665ad48ec082, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  button: {fileID: 660340284}
+  gameObjectsToBeEnabled:
+  - {fileID: 1009589865}
+  gameObjectsToBeDisabled:
+  - {fileID: 2076233079}
 --- !u!1 &693163096
 GameObject:
   m_ObjectHideFlags: 0
@@ -2137,6 +2155,7 @@ GameObject:
   - component: {fileID: 727903617}
   - component: {fileID: 727903616}
   - component: {fileID: 727903615}
+  - component: {fileID: 727903618}
   m_Layer: 5
   m_Name: LeaderBoardsButton
   m_TagString: Untagged
@@ -2246,6 +2265,23 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 727903612}
   m_CullTransparentMesh: 1
+--- !u!114 &727903618
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 727903612}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8fb11c9412595d40951665ad48ec082, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  button: {fileID: 727903615}
+  gameObjectsToBeEnabled:
+  - {fileID: 2076233079}
+  gameObjectsToBeDisabled:
+  - {fileID: 1009589865}
 --- !u!1 &801500098
 GameObject:
   m_ObjectHideFlags: 0
@@ -4647,8 +4683,9 @@ MonoBehaviour:
   bgMusicSlider: {fileID: 1149931680}
   gameOverPanel: {fileID: 1009589865}
   restartButton: {fileID: 1149187127}
+  leaderboardButton: {fileID: 727903615}
   gameOverQuitButton: {fileID: 4042723}
-  leaderboardManager: {fileID: 1830035644}
+  leaderboardView: {fileID: 2076233083}
 --- !u!4 &1756824365
 Transform:
   m_ObjectHideFlags: 0
@@ -4808,51 +4845,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: -20, y: -20}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!1 &1830035643
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1830035645}
-  - component: {fileID: 1830035644}
-  m_Layer: 0
-  m_Name: Leaderboard Manager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1830035644
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1830035643}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8515b63b07c133b47b81cb54dde91208, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  leaderboardId: TetrisLeaderboard
---- !u!4 &1830035645
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1830035643}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1868098470
 GameObject:
   m_ObjectHideFlags: 0
@@ -6024,6 +6016,7 @@ GameObject:
   - component: {fileID: 2076233080}
   - component: {fileID: 2076233082}
   - component: {fileID: 2076233081}
+  - component: {fileID: 2076233083}
   m_Layer: 5
   m_Name: Leaderboards
   m_TagString: Untagged
@@ -6089,6 +6082,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2076233079}
   m_CullTransparentMesh: 1
+--- !u!114 &2076233083
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2076233079}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46168d60760771945966b216577484ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  positionToSpawn: {fileID: 1317684172}
+  entityView: {fileID: -8014831580438966234, guid: 833fa112b8223374081c8c109caf1cda, type: 3}
+  leaderboardId: TetrisLeaderboard
+  backButton: {fileID: 660340284}
 --- !u!1 &2122200995
 GameObject:
   m_ObjectHideFlags: 0
@@ -6179,4 +6188,3 @@ SceneRoots:
   - {fileID: 1868098473}
   - {fileID: 1941356251}
   - {fileID: 229710171}
-  - {fileID: 1830035645}

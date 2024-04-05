@@ -32,15 +32,17 @@ public class GameManager : MonoBehaviour
     [Header("GameOver")]
     [SerializeField] private GameObject gameOverPanel;
     [SerializeField] private Button restartButton;
+    [SerializeField] private Button leaderboardButton;
     [SerializeField] private Button gameOverQuitButton;
-    [Header("LeaderBoardManager")]
-    [SerializeField] private LeaderboardManager leaderboardManager;
+    [Header("LeaderBoard")]
+    [SerializeField] private LeaderboardView leaderboardView;
 
     private BoardController boardController;
     private EventService eventService;
     private SoundController soundController;
     private ScoreController scoreController;
     private GameOverController gameOverController;
+    private LeaderboardController leaderboardController;
 
     private void Awake()
     {
@@ -77,6 +79,7 @@ public class GameManager : MonoBehaviour
         optionButton.onClick.AddListener(PlayButtonClickSound);
         quitButton.onClick.AddListener(OnQuitButtonClick);
         backButton.onClick.AddListener(PlayButtonClickSound);
+        leaderboardButton.onClick.AddListener(OnLeaderboardButtonClick);
     }
 
     private void Initialize()
@@ -86,7 +89,7 @@ public class GameManager : MonoBehaviour
         scoreController = new ScoreController(scoreText, ScorePerRow, eventService);
         soundController = new SoundController(soundEffect, backgroundMusic, sounds, eventService);
         gameOverController = new GameOverController(gameOverPanel, restartButton, gameOverQuitButton, eventService);
-        leaderboardManager.Init(eventService, scoreController);
+        leaderboardController = new LeaderboardController(leaderboardView, eventService, scoreController);
     }
 
     private void SpawnRandomPiece(BoardController board)
@@ -103,6 +106,12 @@ public class GameManager : MonoBehaviour
             pauseButton.gameObject.SetActive(false);
             eventService.GameOver.Invoke();
         }
+    }
+
+    private void OnLeaderboardButtonClick()
+    {
+        leaderboardController.GetAllLeaderboardEntries();
+        PlayButtonClickSound();
     }
 
     private void OnPauseButtonClick()
