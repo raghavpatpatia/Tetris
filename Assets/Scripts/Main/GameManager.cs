@@ -36,6 +36,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Button gameOverQuitButton;
     [Header("LeaderBoard")]
     [SerializeField] private LeaderboardView leaderboardView;
+    [Header("Streak System")]
+    [SerializeField] private StreakView streakView;
 
     private BoardController boardController;
     private EventService eventService;
@@ -43,6 +45,7 @@ public class GameManager : MonoBehaviour
     private ScoreController scoreController;
     private GameOverController gameOverController;
     private LeaderboardController leaderboardController;
+    private StreakController streakController;
 
     private void Awake()
     {
@@ -86,10 +89,11 @@ public class GameManager : MonoBehaviour
     {
         eventService = new EventService();
         boardController = new BoardController(boardScriptableObject, boardView, eventService);
-        scoreController = new ScoreController(scoreText, ScorePerRow, eventService);
+        scoreController = new ScoreController(scoreText, eventService);
         soundController = new SoundController(soundEffect, backgroundMusic, sounds, eventService);
         gameOverController = new GameOverController(gameOverPanel, restartButton, gameOverQuitButton, eventService);
         leaderboardController = new LeaderboardController(leaderboardView, eventService, scoreController);
+        streakController = new StreakController(streakView, eventService, ScorePerRow);
     }
 
     private void SpawnRandomPiece(BoardController board)
@@ -143,9 +147,10 @@ public class GameManager : MonoBehaviour
         backgroundMusic.volume = volume;
     }
 
-    private void OnDisable()
+    private void OnDestroy()
     {
         eventService.QuitGame.RemoveListener(OnQuitButtonClick);
         eventService.SpawnRandomPiece.RemoveListener(SpawnRandomPiece);
+        streakController.Dispose();
     }
 }

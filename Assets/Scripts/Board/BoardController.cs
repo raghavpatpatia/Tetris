@@ -101,7 +101,8 @@ public class BoardController
             }
             row++;
         }
-        eventService.AddScore.Invoke();
+        eventService.OnLineCleared.Invoke();
+        // eventService.AddScore.Invoke();
         eventService.PlaySoundEffect.Invoke(Sounds.LineClear);
     }
     ~BoardController()
