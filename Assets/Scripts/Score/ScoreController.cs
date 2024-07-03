@@ -3,12 +3,10 @@ public class ScoreController
 {
     private TextMeshProUGUI scoreText;
     private int Score;
-    private int scorePerRow;
     private EventService eventService;
-    public ScoreController(TextMeshProUGUI scoreText, int scorePerRow, EventService eventService)
+    public ScoreController(TextMeshProUGUI scoreText, EventService eventService)
     {
         this.scoreText = scoreText;
-        this.scorePerRow = scorePerRow;
         this.Score = 0;
         this.eventService = eventService;
         SubscribeEvents();
@@ -20,9 +18,9 @@ public class ScoreController
         eventService.RestartGame.AddListener(ResetScore);
     }
 
-    private void AddScore()
+    private void AddScore(int score)
     {
-        Score += scorePerRow;
+        Score += score;
         scoreText.text = Score.ToString();
         eventService.PlaySoundEffect.Invoke(Sounds.ScorePoints);
     }
